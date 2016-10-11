@@ -23,12 +23,7 @@ function liri(liriCommand, liriData) {
 	        myTweets();
 	        break;
 	    case "spotify-this-song":
-	        if (process.argv.length > 3) {
-	            var song = process.argv[3];
-	        } else {
-	            var song = "The Sign";
-	        }
-	        spotifyThisSong(song);
+			console.log('song');
 	        break;
 	    case "movie-this":
 	        console.log("movie");
@@ -58,31 +53,23 @@ function myTweets() {
     // Assign the screen name and number of tweets to return.
     var params = { 
     		screen_name: liriData,
-    		count: 7 
     	};
     // Get the tweets
     client.get('statuses/user_timeline.json', params, function(error, tweets, response) {
         // Display the tweets and show error if there is an error
         if (!error) {
-            for (var i = 0; i < 7; i++) {
-                console.log(tweets[i].created_at);
+        	if ( tweets.length < 20) {
+        		var numberTweets = tweets.length;
+        	} else {
+        		var numberTweets = 20;
+        	}
+            for (var i = 0; i < numberTweets; i++) {
+            	console.log(tweets[i].created_at);
                 console.log(tweets[i].text);
-                console.log('-----------')
+                console.log('-----------');
             }
         } else {
             console.log('Error occurred: ' + error);
-        }
-    });
-}
-
-function spotifyThisSong(song) {
-	song = song.replace(" ","+");
-	console.log(song);
-    spotify.search({ type: 'track', query: song }, function(error, response) {
-        if (!error) {
-        	console.log('response: '+response.artists.items.external_urls);	
-        } else {    
-        	console.log('Error occurred: ' + error);
         }
     });
 }
