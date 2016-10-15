@@ -47,7 +47,7 @@ function liri(liriCommand, liriData) {
             movieThis(movie); 
             break;
         case "do-what-it-says":
-            console.log("do what it says");
+            doWhatItSays();
             break;
         default:
             console.log("no choice");
@@ -128,6 +128,20 @@ function movieThis(movie) {
             console.log('Error occurred: ' + error);
         }
     });
+}
+
+// Function to process the Liri do what it says in the random file and run the correct Liri Command
+
+function doWhatItSays() {
+            fs.readFile(liriData, "utf8", function(error,response){
+                // split the info on the file at the comma
+                var liriArgs = response.split(',');
+                // create new variables with the array data
+                var liriCommand = liriArgs[0];
+                var liriData = liriArgs[1];
+                // run the main function again with the data from the file.
+                liri(liriCommand,liriData);
+            });
 }
 
 liri(liriCommand, liriData);
