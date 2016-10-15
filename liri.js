@@ -34,7 +34,17 @@ function liri(liriCommand, liriData) {
             spotifyThisSong(song);
             break;
         case "movie-this":
-       		console.log("movie this");
+            if (liriArgs.length === 1) {
+                var movie = "Mr. Nobody";
+            } else if (liriArgs.length === 2) {
+                var movie = liriData;
+            } else {
+                var movie = '';
+                for (var i = 1; i < liriArgs.length; i++) {
+                    movie = movie + ' ' + liriArgs[i];
+                }
+            }    
+            movieThis(movie); 
             break;
         case "do-what-it-says":
             console.log("do what it says");
@@ -93,6 +103,27 @@ function spotifyThisSong(song) {
             console.log('Song Name: ' + response.tracks.items[0].name);
             console.log('Preview URL: ' + response.tracks.items[0].preview_url);
             console.log('Album Name: ' + response.tracks.items[0].album.name);
+        } else {
+            console.log('Error occurred: ' + error);
+        }
+    });
+}
+
+function movieThis(movie) {
+	// Search for movie
+	    request('http://www.omdbapi.com/?t='+movie+'&y=&plot=short&tomatoes=true&r=json', function (error, response, body) {
+        // Display song details and show error if there is an error
+        if (!error && response.statusCode == 200) {
+        	body = JSON.parse(body);
+            console.log('Movie Title: ' + body.Title);
+            console.log('Year Released: ' + body.Released);
+            console.log('Rating: ' + body.Rated);
+            console.log('Production Country: ' + body.Country);
+            console.log('Language: ' + body.Language);
+            console.log('Plot: ' + body.Plot);
+            console.log('Actors: ' + body.Actors);
+            console.log('Rotten Tomatoes Rating: ' + body.tomatoUserRating);
+            console.log('Rotten Tomatoes URL: ' + body.tomatoURL);
         } else {
             console.log('Error occurred: ' + error);
         }
