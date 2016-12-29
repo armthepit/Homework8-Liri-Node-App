@@ -2,7 +2,7 @@
 
 ### Build an Siri Like app that uses the command line to take in parameters and give back data using node packages and the Twitter, Spotify, OMDB, and IMDB API's.
 
-![Liri] (assets/images/liri.gif)
+![Liri] (images/liri.gif)
 
 ### Design Notes
 	* Use Node packages to extract data passed to it from the command line and console it out.
